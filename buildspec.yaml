@@ -12,7 +12,7 @@ phases:
         run-as: root
         on-failure: abort
         commands:
-           - "aws ecr get-login-password --region $ecr_region | docker login --username AWS --password-stdin $ecr_repo"
+           - docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 160281779685.dkr.ecr.ap-south-1.amazonaws.com/demo123
         finally:
            - echo "sucessfully authenticated with ecr repo"   
     build:
