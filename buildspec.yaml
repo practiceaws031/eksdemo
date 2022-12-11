@@ -4,6 +4,7 @@ phases:
        run-as: root
        on-failure: abort
        commands:
+          - chmod 777 ./scripts/install_agents.sh
           - ./scripts/install_agents.sh
        finally:
           - echo "install phase completed successfully"   
