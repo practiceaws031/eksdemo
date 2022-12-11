@@ -4,8 +4,8 @@ phases:
        run-as: root
        on-failure: abort
        commands:
-          - chmod 777 ./scripts/install_agents.sh
-          - ./scripts/install_agents.sh
+          - chmod 777 $CODEBUILD_SRC_DIR/scripts/install_agents.sh
+          - $CODEBUILD_SRC_DIR/scripts/install_agents.sh
        finally:
           - echo "install phase completed successfully"   
     pre_build:
