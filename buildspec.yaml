@@ -1,0 +1,26 @@
+version: 0.2
+phases:
+    install:
+       run-as: root
+       on-failure: abort
+       commands:
+          - ./scripts/install_agents.sh
+       finally:
+          - echo "install phase completed successfully"   
+    pre_build:
+        run-as: root
+        on-failure: abort
+        commands:
+           - "aws ecr get-login-password --region $ecr_region | docker login --username AWS --password-stdin $ecr_repo"
+        finally:
+           - echo "sucessfully authenticated with ecr repo"   
+    build:
+        run-as: root
+        on-failure: abort
+        commands:
+           - docker build -t eksdemo .
+           - docker tag $ecr_repo/$tag
+           - docker push $ecr_repo/$tag                  
+artifacts:
+   files:
+     - SampleWebApp.war               
