@@ -6,16 +6,14 @@ phases:
        commands:
           - chmod 777 $CODEBUILD_SRC_DIR/scripts/install_agents.sh
           - $CODEBUILD_SRC_DIR/scripts/install_agents.sh
-          - yum install docker -y
-          - systemctl enable docker
-          - systemctl start docker
+          - service docker start
        finally:
           - echo "install phase completed successfully"   
     pre_build:
         run-as: root
         on-failure: abort
         commands:
-           - docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 160281779685.dkr.ecr.ap-south-1.amazonaws.com/demo123
+           - docker login -u AWS -p $(aws ecr get-login-password --region $ecr_region) $ecr_repo
         finally:
            - echo "sucessfully authenticated with ecr repo"   
     build:
@@ -23,7 +21,7 @@ phases:
         on-failure: abort
         commands:
            - docker build -t eksdemo .
-           - docker tag $ecr_repo/$tag
+           - docker tag eksdemo:latest $ecr_repo/$tag
            - docker push $ecr_repo/$tag                  
 artifacts:
    files:
