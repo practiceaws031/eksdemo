@@ -6,7 +6,7 @@ phases:
        commands:
           - chmod 777 $CODEBUILD_SRC_DIR/scripts/install_agents.sh
           - $CODEBUILD_SRC_DIR/scripts/install_agents.sh
-          - service docker start
+          - systemctl start docker
        finally:
           - echo "install phase completed successfully"   
     pre_build:
