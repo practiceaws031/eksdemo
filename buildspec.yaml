@@ -12,7 +12,7 @@ phases:
         run-as: root
         on-failure: abort
         commands:
-           - aws ecr get-login-password --region ${ECR_REGION} | docker login --username AWS --password-stdin ${ECR_REPO}
+           - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 160281779685.dkr.ecr.ap-south-1.amazonaws.com
         finally:
            - echo "sucessfully authenticated with ecr repo"   
     build:
@@ -20,8 +20,8 @@ phases:
         on-failure: abort
         commands:
            - docker build -t eksdemo .
-           - docker tag eksdemo:latest $ECR_REPO/$TAG
-           - docker push $ECR_REPO/$TAG                  
+           - docker tag eksdemo:latest 160281779685.dkr.ecr.ap-south-1.amazonaws.com/demo123:latest
+           - docker push 160281779685.dkr.ecr.ap-south-1.amazonaws.com/demo123:latest                  
 artifacts:
    files:
      - SampleWebApp.war               
