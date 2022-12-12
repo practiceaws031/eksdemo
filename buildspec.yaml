@@ -6,9 +6,6 @@ phases:
        commands:
           - chmod 777 $CODEBUILD_SRC_DIR/scripts/install_agents.sh
           - $CODEBUILD_SRC_DIR/scripts/install_agents.sh
-          - mkdir /sys/fs/cgroup/systemd
-          - sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
-          - systemctl start docker
        finally:
           - echo "install phase completed successfully"   
     pre_build:
