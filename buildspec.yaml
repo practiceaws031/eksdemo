@@ -12,7 +12,7 @@ phases:
         run-as: root
         on-failure: abort
         commands:
-           - docker login -u AWS -p $(aws ecr get-login-password --region $ecr_region) $ecr_repo
+           - docker login -u AWS -p $(aws ecr get-login-password --region $ECR_REGION) $ECR_REPO
         finally:
            - echo "sucessfully authenticated with ecr repo"   
     build:
@@ -20,8 +20,8 @@ phases:
         on-failure: abort
         commands:
            - docker build -t eksdemo .
-           - docker tag eksdemo:latest $ecr_repo/$tag
-           - docker push $ecr_repo/$tag                  
+           - docker tag eksdemo:latest $ECR_REPO/$TAG
+           - docker push $ECR_REPO/$TAG                  
 artifacts:
    files:
      - SampleWebApp.war               
